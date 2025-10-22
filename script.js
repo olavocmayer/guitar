@@ -5,8 +5,8 @@ const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
 console.log('Supabase URL and Key defined');
 
-const supabase = supabase.createClient(supabaseUrl, supabaseKey)
-console.log('Supabase client created:', supabase);
+const client = supabase.createClient(supabaseUrl, supabaseKey)
+console.log('Supabase client created:', client);
 
 const planDateInput = document.getElementById('planDate');
 const songTitleSpan = document.getElementById('songTitle');
@@ -17,7 +17,7 @@ const messageParagraph = document.getElementById('message');
 
 async function getDailyPlan(date) {
     console.log('Fetching daily plan for date:', date);
-    const { data, error } = await supabase
+    const { data, error } = await client
         .from('daily_plans')
         .select('*')
         .eq('date', date)
