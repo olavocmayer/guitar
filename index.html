@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Guitar Plan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Guitar Practice Plan</h1>
+        <input type="date" id="planDate">
+        <div class="plan-details">
+            <p><strong>Song:</strong> <span id="songTitle"></span></p>
+            <p><strong>Artist:</strong> <span id="artistName"></span></p>
+            <p><strong>Comment:</strong> <span id="comment"></span></p>
+            <p><strong>Link:</strong> <a id="songLink" href="#" target="_blank">Watch Tutorial</a></p>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

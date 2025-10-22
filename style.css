@@ -1,0 +1,74 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a; /* Dark charcoal background */
+    color: #e0e0e0; /* Light gray text */
+    background-image: url('https://www.transparenttextures.com/patterns/dark-denim.png'); /* Subtle texture */
+}
+
+.container {
+    background-color: #2c2c2c; /* Slightly lighter dark background for container */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid #444; /* Subtle border */
+}
+
+h1 {
+    color: #ffcc00; /* Gold accent for heading */
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input[type="date"] {
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 6px;
+    border: 1px solid #555; /* Darker border */
+    background-color: #3a3a3a; /* Darker input background */
+    color: #ffcc00; /* Gold text for date input */
+    font-size: 1.1em;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #ffcc00; /* Gold border on focus */
+}
+
+.plan-details p {
+    margin: 15px 0;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.plan-details strong {
+    color: #ffcc00; /* Gold for labels */
+}
+
+.plan-details a {
+    color: #00aaff; /* Blue accent for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.plan-details a:hover {
+    color: #00c0ff; /* Lighter blue on hover */
+    text-decoration: underline;
+}
+
+#message {
+    color: #ff6b6b; /* Red for error messages */
+    margin-top: 20px;
+    font-weight: bold;
+}
