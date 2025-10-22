@@ -1,87 +1,95 @@
-
 const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
 
 const client = supabase.createClient(supabaseUrl, supabaseKey)
 
-const planDateInput = document.getElementById('planDate');
 const carouselContainer = document.getElementById('carouselContainer');
-const messageParagraph = document.getElementById('message');
 const prevDayButton = document.getElementById('prevDay');
 const nextDayButton = document.getElementById('nextDay');
 
-async function getDailyPlan(date) {
+async function getDailyPlans(startDate, endDate) {
     const { data, error } = await client
         .from('daily_plans')
         .select('*')
-        .eq('date', date)
-        .single();
+        .gte('date', startDate)
+        .lte('date', endDate)
+        .order('date', { ascending: true });
 
-    if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
-        console.error('Error fetching daily plan:', error.message);
-        messageParagraph.textContent = 'Error fetching plan.';
-        return null;
+    if (error) {
+        console.error('Error fetching daily plans:', error.message);
+        return [];
     }
     return data;
 }
 
-function displayPlan(plan, dateString) {
+function displayPlans(plans, startDate, numDays) {
     carouselContainer.innerHTML = ''; // Clear previous cards
-    messageParagraph.textContent = ''; // Clear previous messages
 
-    const card = document.createElement('div');
-    card.classList.add('card');
+    const date = new Date(startDate);
 
-    if (plan) {
-        card.innerHTML = `
-            <h2>${plan.song_title}</h2>
-            <p><strong>Artist:</strong> ${plan.artist_name}</p>
-            <p><strong>Comment:</strong> ${plan.comment}</p>
-            <p><strong>Link:</strong> <a href="${plan.link}" target="_blank">Watch Tutorial</a></p>
-        `;
-    } else {
-        card.innerHTML = `
-            <h2>No plan for ${dateString}</h2>
-            <p>Check back later or add a plan for this date!</p>
-        `;
+    for (let i = 0; i < numDays; i++) {
+        const dateString = date.toISOString().split('T')[0];
+        const plan = plans.find(p => p.date === dateString);
+
+        const card = document.createElement('div');
+        card.className = "flex h-full flex-1 flex-col gap-4 rounded-xl bg-gray-50 border border-gray-200/80 shadow-sm min-w-60 w-60 hover:shadow-lg transition-shadow";
+
+        if (plan) {
+            card.innerHTML = `
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlfzX9hDEKoEgzCid_2ZW5je7oDGNWKo6xrdcCCA6SkIDexNvdztiFZo3pAxKYOo9YMrd1P02ELFdS8xPSyeH2G88VSzcQKpQldjXoWRR7lFThVMQX9ypRKWtzsi0ZE25z3t6CHw7GD9PYXl4gDbX8AQUvd-LqS6SHKFaoFSCHTde0i_olviReLILaEwP8xfrwq7jZyFPNY5zHAvKFrR2mphxgc4MAlbIQgqbLSFagvX-kzsYa6ehZop-zk1rD1hZaXiyh-wF5fg");'></div>
+                <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                    <div>
+                        <p class="text-gray-900 text-base font-medium leading-normal">${plan.song_title}</p>
+                        <p class="text-gray-500 text-sm font-normal leading-normal">${plan.comment}</p>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-primary h-2.5 rounded-full" style="width: 25%"></div>
+                    </div>
+                </div>
+            `;
+        } else {
+            card.innerHTML = `
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-xl flex items-center justify-center bg-gray-50">
+                    <span class="material-symbols-outlined text-gray-500 text-6xl">calendar_today</span>
+                </div>
+                <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+                    <div>
+                        <p class="text-gray-900 text-base font-medium leading-normal">No plan for ${date.toLocaleDateString()}</p>
+                        <p class="text-gray-500 text-sm font-normal leading-normal">Check back later or add a plan for this date!</p>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-gray-400 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            `;
+        }
+        carouselContainer.appendChild(card);
+        date.setDate(date.getDate() + 1);
     }
-    carouselContainer.appendChild(card);
 }
 
-async function loadPlanForDate(dateString) {
-    const plan = await getDailyPlan(dateString);
-    displayPlan(plan, dateString);
+async function loadPlans(startDate, numDays) {
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + numDays - 1);
+    const endDateString = endDate.toISOString().split('T')[0];
+    const plans = await getDailyPlans(startDate.toISOString().split('T')[0], endDateString);
+    displayPlans(plans, startDate, numDays);
 }
 
 // Set initial date to today
 const today = new Date();
-const yyyy = today.getFullYear();
-const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-const dd = String(today.getDate()).padStart(2, '0');
-const todayString = `${yyyy}-${mm}-${dd}`;
-planDateInput.value = todayString;
+let currentStartDate = new Date(today);
 
-// Load plan for today on initial load
-loadPlanForDate(todayString);
-
-// Add event listener for date changes
-planDateInput.addEventListener('change', (event) => {
-    loadPlanForDate(event.target.value);
-});
+// Load plans for the next 4 days on initial load
+loadPlans(currentStartDate, 4);
 
 // Add event listeners for carousel navigation
 prevDayButton.addEventListener('click', () => {
-    const currentDate = new Date(planDateInput.value);
-    currentDate.setDate(currentDate.getDate() - 1);
-    const newDateString = currentDate.toISOString().split('T')[0];
-    planDateInput.value = newDateString;
-    loadPlanForDate(newDateString);
+    currentStartDate.setDate(currentStartDate.getDate() - 1);
+    loadPlans(currentStartDate, 4);
 });
 
 nextDayButton.addEventListener('click', () => {
-    const currentDate = new Date(planDateInput.value);
-    currentDate.setDate(currentDate.getDate() + 1);
-    const newDateString = currentDate.toISOString().split('T')[0];
-    planDateInput.value = newDateString;
-    loadPlanForDate(newDateString);
+    currentStartDate.setDate(currentStartDate.getDate() + 1);
+    loadPlans(currentStartDate, 4);
 });
