@@ -1,13 +1,11 @@
 
-import { createClient } from '@supabase/supabase-js'
-
 console.log('script.js started');
 
 const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
 console.log('Supabase URL and Key defined');
 
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 console.log('Supabase client created:', supabase);
 
 const planDateInput = document.getElementById('planDate');
