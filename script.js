@@ -1,22 +1,16 @@
 
-console.log('script.js started');
-
 const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
-console.log('Supabase URL and Key defined');
 
 const client = supabase.createClient(supabaseUrl, supabaseKey)
-console.log('Supabase client created:', client);
 
 const planDateInput = document.getElementById('planDate');
-const songTitleSpan = document.getElementById('songTitle');
-const artistNameSpan = document.getElementById('artistName');
-const commentSpan = document.getElementById('comment');
-const songLinkAnchor = document.getElementById('songLink');
+const carouselContainer = document.getElementById('carouselContainer');
 const messageParagraph = document.getElementById('message');
+const prevDayButton = document.getElementById('prevDay');
+const nextDayButton = document.getElementById('nextDay');
 
 async function getDailyPlan(date) {
-    console.log('Fetching daily plan for date:', date);
     const { data, error } = await client
         .from('daily_plans')
         .select('*')
@@ -28,45 +22,44 @@ async function getDailyPlan(date) {
         messageParagraph.textContent = 'Error fetching plan.';
         return null;
     }
-    console.log('Daily plan data:', data);
-    console.log('Daily plan error:', error);
     return data;
 }
 
-function displayPlan(plan) {
+function displayPlan(plan, dateString) {
+    carouselContainer.innerHTML = ''; // Clear previous cards
+    messageParagraph.textContent = ''; // Clear previous messages
+
+    const card = document.createElement('div');
+    card.classList.add('card');
+
     if (plan) {
-        songTitleSpan.textContent = plan.song_title;
-        artistNameSpan.textContent = plan.artist_name;
-        commentSpan.textContent = plan.comment;
-        songLinkAnchor.href = plan.link;
-        songLinkAnchor.style.display = 'inline';
-        messageParagraph.textContent = '';
+        card.innerHTML = `
+            <h2>${plan.song_title}</h2>
+            <p><strong>Artist:</strong> ${plan.artist_name}</p>
+            <p><strong>Comment:</strong> ${plan.comment}</p>
+            <p><strong>Link:</strong> <a href="${plan.link}" target="_blank">Watch Tutorial</a></p>
+        `;
     } else {
-        songTitleSpan.textContent = 'No plan for this date.';
-        artistNameSpan.textContent = '';
-        commentSpan.textContent = '';
-        songLinkAnchor.href = '#';
-        songLinkAnchor.style.display = 'none';
-        messageParagraph.textContent = 'No plan found for this date.';
+        card.innerHTML = `
+            <h2>No plan for ${dateString}</h2>
+            <p>Check back later or add a plan for this date!</p>
+        `;
     }
+    carouselContainer.appendChild(card);
 }
 
 async function loadPlanForDate(dateString) {
-    console.log('Loading plan for date:', dateString);
     const plan = await getDailyPlan(dateString);
-    displayPlan(plan);
+    displayPlan(plan, dateString);
 }
 
 // Set initial date to today
-console.log('Setting initial date');
 const today = new Date();
 const yyyy = today.getFullYear();
 const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
 const dd = String(today.getDate()).padStart(2, '0');
 const todayString = `${yyyy}-${mm}-${dd}`;
-console.log('Calculated todayString:', todayString);
 planDateInput.value = todayString;
-console.log('planDateInput.value set to:', planDateInput.value);
 
 // Load plan for today on initial load
 loadPlanForDate(todayString);
@@ -74,4 +67,21 @@ loadPlanForDate(todayString);
 // Add event listener for date changes
 planDateInput.addEventListener('change', (event) => {
     loadPlanForDate(event.target.value);
+});
+
+// Add event listeners for carousel navigation
+prevDayButton.addEventListener('click', () => {
+    const currentDate = new Date(planDateInput.value);
+    currentDate.setDate(currentDate.getDate() - 1);
+    const newDateString = currentDate.toISOString().split('T')[0];
+    planDateInput.value = newDateString;
+    loadPlanForDate(newDateString);
+});
+
+nextDayButton.addEventListener('click', () => {
+    const currentDate = new Date(planDateInput.value);
+    currentDate.setDate(currentDate.getDate() + 1);
+    const newDateString = currentDate.toISOString().split('T')[0];
+    planDateInput.value = newDateString;
+    loadPlanForDate(newDateString);
 });

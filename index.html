@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Guitar Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Daily Guitar Practice Plan</h1>
         <input type="date" id="planDate">
-        <div class="plan-details">
-            <p><strong>Song:</strong> <span id="songTitle"></span></p>
-            <p><strong>Artist:</strong> <span id="artistName"></span></p>
-            <p><strong>Comment:</strong> <span id="comment"></span></p>
-            <p><strong>Link:</strong> <a id="songLink" href="#" target="_blank">Watch Tutorial</a></p>
+        <div class="carousel-navigation">
+            <button id="prevDay" class="nav-button">&lt;</button>
+            <div class="carousel-container" id="carouselContainer">
+                <!-- Daily plan cards will be inserted here by JavaScript -->
+            </div>
+            <button id="nextDay" class="nav-button">&gt;</button>
         </div>
         <p id="message"></p>
     </div>
