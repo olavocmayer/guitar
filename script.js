@@ -1,3 +1,4 @@
+
 const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
 
@@ -10,7 +11,7 @@ const nextDayButton = document.getElementById('nextDay');
 async function getDailyPlans(startDate, endDate) {
     const { data, error } = await client
         .from('daily_plans')
-        .select('*')
+        .select('*, artist_name')
         .gte('date', startDate)
         .lte('date', endDate)
         .order('date', { ascending: true });
@@ -40,11 +41,13 @@ function displayPlans(plans, startDate, numDays) {
                 <div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
                     <div>
                         <p class="text-gray-900 text-base font-medium leading-normal">${plan.song_title}</p>
+                        <p class="text-gray-500 text-sm font-normal leading-normal italic">${plan.artist_name}</p>
                         <p class="text-gray-500 text-sm font-normal leading-normal">${plan.comment}</p>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-primary h-2.5 rounded-full" style="width: 25%"></div>
                     </div>
+                    <p class="text-gray-400 text-xs font-normal leading-normal mt-2">${new Date(plan.date).toLocaleDateString()}</p>
                 </div>
             `;
         } else {
@@ -60,6 +63,7 @@ function displayPlans(plans, startDate, numDays) {
                     <div class="w-full bg-gray-200 rounded-full h-2.5">
                         <div class="bg-gray-400 h-2.5 rounded-full" style="width: 0%"></div>
                     </div>
+                    <p class="text-gray-400 text-xs font-normal leading-normal mt-2">${date.toLocaleDateString()}</p>
                 </div>
             `;
         }
