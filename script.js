@@ -119,6 +119,15 @@ async function signOut() {
 signInButton.addEventListener('click', signInWithEmail);
 signUpButton.addEventListener('click', signUpWithEmail);
 signOutButton.addEventListener('click', signOut);
+const guestModeButton = document.getElementById('guest-mode-button');
+
+guestModeButton.addEventListener('click', () => {
+    mainContent.classList.remove('hidden');
+    loginForm.classList.add('hidden');
+    const today = new Date();
+    let currentStartDate = new Date(today);
+    loadPlans(currentStartDate, 4);
+});
 
 client.auth.onAuthStateChange((event, session) => {
     if (session) {
