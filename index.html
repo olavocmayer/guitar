@@ -28,45 +28,72 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-background-light font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
-<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-<div class="@container">
-<div class="@[480px]:p-4">
-<div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4" data-alt="A person playing an acoustic guitar, with a warm, inviting light." style='background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT_ZSImHOJOFivkMtNHIeDk0EwOmakRVtDRIKO85VnTeBVXrdGECgYnM1_3jur-QEahhKghqYkpaQrwJJ7Fi22HfuwfTvMjE_R42kza9320yJCvb_N2yQ9afoUBki8aWoMrFehcMv9fPNxVJBr7ntxqarPy_N1LXILknG0oLxETnyHupQevYTv28s7STa9-cdAoNi_FYUsO9OHwiAnkPO2k33V5Hn7uSN-Cud35ejFDS9cvDBEHv5d4E87Tmmvfr2yRMi9gOfSHg");'>
-<div class="flex flex-col gap-2 text-center">
-<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
-                                        Unlock Your Inner Guitarist
-                                    </h1>
-<h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                                        Join our daily guitar course and learn to play your favorite songs with our easy-to-follow lessons.
-                                    </h2>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-primary/90 transition-colors">
-<span class="truncate">Start Your Free Trial</span>
-</button>
-</div>
-</div>
-</div>
-<h2 class="text-gray-900 text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Your Daily Path to Guitar Mastery</h2>
-<div class="relative group">
-<div class="flex overflow-x-auto pb-4 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-<div class="flex items-stretch p-4 gap-4" id="carouselContainer">
-<!-- Daily plan cards will be inserted here by JavaScript -->
-</div>
-</div>
-<button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden md:group-hover:block" id="prevDay">
-<span class="material-symbols-outlined text-gray-800">chevron_left</span>
-</button>
-<button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden md:group-hover:block" id="nextDay">
-<span class="material-symbols-outlined text-gray-800">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+    <div id="login-form" class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+        <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+            <h1 class="font-bold text-center text-2xl mb-5">Your App Name</h1>
+            <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+                <div class="px-5 py-7">
+                    <label class="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label>
+                    <input type="email" id="email" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+                    <label class="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
+                    <input type="password" id="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+                    <button type="button" id="sign-in-button" class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+                        <span class="inline-block mr-2">Sign In</span>
+                    </button>
+                    <button type="button" id="sign-up-button" class="transition duration-200 mt-2 border border-gray-200 text-gray-500 w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+                        <span class="inline-block mr-2">Sign Up</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content" class="hidden">
+        <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+            <div class="layout-container flex h-full grow flex-col">
+                <div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                        <div class="@container">
+                            <div class="@[480px]:p-4">
+                                <div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4" data-alt="A person playing an acoustic guitar, with a warm, inviting light." style='background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT_ZSImHOJOFivkMtNHIeDk0EwOmakRVtDRIKO85VnTeBVXrdGECgYnM1_3jur-QEahhKghqYkpaQrwJJ7Fi22HfuwfTvMjE_R42kza9320yJCvb_N2yQ9afoUBki8aWoMrFehcMv9fPNxVJBr7ntxqarPy_N1LXILknG0oLxETnyHupQevYTv28s7STa9-cdAoNi_FYUsO9OHwiAnkPO2k33V5Hn7uSN-Cud35ejFDS9cvDBEHv5d4E87Tmmvfr2yRMi9gOfSHg");'>
+                                    <div class="flex flex-col gap-2 text-center">
+                                        <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                                            Unlock Your Inner Guitarist
+                                        </h1>
+                                        <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                                            Join our daily guitar course and learn to play your favorite songs with our easy-to-follow lessons.
+                                        </h2>
+                                    </div>
+                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                                        <span class="truncate">Start Your Free Trial</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-gray-900 text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Your Daily Path to Guitar Mastery</h2>
+                        <div class="relative group">
+                            <div class="flex overflow-x-auto pb-4 [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+                                <div class="flex items-stretch p-4 gap-4" id="carouselContainer">
+                                    <!-- Daily plan cards will be inserted here by JavaScript -->
+                                </div>
+                            </div>
+                            <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden md:group-hover:block" id="prevDay">
+                                <span class="material-symbols-outlined text-gray-800">chevron_left</span>
+                            </button>
+                            <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden md:group-hover:block" id="nextDay">
+                                <span class="material-symbols-outlined text-gray-800">chevron_right</span>
+                            </button>
+                        </div>
+                        <button id="sign-out-button" class="mt-4 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-gray-500 text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-gray-600 transition-colors">
+                            <span class="truncate">Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js" type="module" defer></script>
 </body>

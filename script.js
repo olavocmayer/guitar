@@ -1,4 +1,3 @@
-
 const supabaseUrl = 'https://vulblhgjfzgnkidkxzle.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bGJsaGdqZnpnbmtpZGt4emxlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwODM4MDUsImV4cCI6MjA3NjY1OTgwNX0.u0Jbwcfw1R3Dz4rcsHtPc4rP6Inmp0fdJjorLKdjKew'
 
@@ -7,6 +6,13 @@ const client = supabase.createClient(supabaseUrl, supabaseKey)
 const carouselContainer = document.getElementById('carouselContainer');
 const prevDayButton = document.getElementById('prevDay');
 const nextDayButton = document.getElementById('nextDay');
+const loginForm = document.getElementById('login-form');
+const mainContent = document.getElementById('main-content');
+const signInButton = document.getElementById('sign-in-button');
+const signUpButton = document.getElementById('sign-up-button');
+const signOutButton = document.getElementById('sign-out-button');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
 
 async function getDailyPlans(startDate, endDate) {
     const { data, error } = await client
@@ -80,20 +86,64 @@ async function loadPlans(startDate, numDays) {
     displayPlans(plans, startDate, numDays);
 }
 
-// Set initial date to today
-const today = new Date();
-let currentStartDate = new Date(today);
+async function signInWithEmail() {
+    const { error } = await client.auth.signInWithPassword({
+        email: emailInput.value,
+        password: passwordInput.value,
+    });
+    if (error) {
+        alert(error.message);
+    }
+}
 
-// Load plans for the next 4 days on initial load
-loadPlans(currentStartDate, 4);
+async function signUpWithEmail() {
+    const { error } = await client.auth.signUp({
+        email: emailInput.value,
+        password: passwordInput.value,
+    });
+    if (error) {
+        alert(error.message);
+    } else {
+        alert('Check your email for a confirmation link.');
+    }
+}
+
+async function signOut() {
+    const { error } = await client.auth.signOut();
+    if (error) {
+        alert(error.message);
+    }
+}
+
+// Event Listeners
+signInButton.addEventListener('click', signInWithEmail);
+signUpButton.addEventListener('click', signUpWithEmail);
+signOutButton.addEventListener('click', signOut);
+
+client.auth.onAuthStateChange((event, session) => {
+    if (session) {
+        mainContent.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+        const today = new Date();
+        let currentStartDate = new Date(today);
+        loadPlans(currentStartDate, 4);
+    } else {
+        mainContent.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+    }
+});
 
 // Add event listeners for carousel navigation
 prevDayButton.addEventListener('click', () => {
+    const today = new Date();
+    let currentStartDate = new Date(today);
     currentStartDate.setDate(currentStartDate.getDate() - 1);
     loadPlans(currentStartDate, 4);
 });
 
 nextDayButton.addEventListener('click', () => {
+    const today = new Date();
+    let currentStartDate = new Date(today);
     currentStartDate.setDate(currentStartDate.getDate() + 1);
     loadPlans(currentStartDate, 4);
 });
