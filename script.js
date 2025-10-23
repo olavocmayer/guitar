@@ -9,7 +9,7 @@ const nextDayButton = document.getElementById('nextDay');
 const loginForm = document.getElementById('login-form');
 const mainContent = document.getElementById('main-content');
 const signInButton = document.getElementById('sign-in-button');
-const signUpButton = document.getElementById('sign-up-button');
+
 const signOutButton = document.getElementById('sign-out-button');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -96,28 +96,7 @@ async function signInWithEmail() {
     }
 }
 
-async function signUpWithEmail() {
-    const { error } = await client.auth.signUp({
-        email: emailInput.value,
-        password: passwordInput.value,
-    });
-    if (error) {
-        alert(error.message);
-    } else {
-        alert('Check your email for a confirmation link.');
-    }
-}
 
-async function signOut() {
-    const { error } = await client.auth.signOut();
-    if (error) {
-        alert(error.message);
-    }
-}
-
-// Event Listeners
-signInButton.addEventListener('click', signInWithEmail);
-signUpButton.addEventListener('click', signUpWithEmail);
 signOutButton.addEventListener('click', signOut);
 const guestModeButton = document.getElementById('guest-mode-button');
 

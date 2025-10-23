@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#F97316",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#181411",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-background-light font-display">
+
+    <div id="signup-form" class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+        <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+            <h1 class="font-bold text-center text-2xl mb-5">Create Your Account</h1>
+            <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+                <div class="px-5 py-7">
+                    <label class="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label>
+                    <input type="email" id="email" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+                    <label class="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
+                    <input type="password" id="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" />
+                    <button type="button" id="signup-button" class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block">
+                        <span class="inline-block mr-2">Sign Up</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="signup.js" type="module" defer></script>
+</body>
+</html>
